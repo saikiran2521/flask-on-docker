@@ -35,5 +35,13 @@ def list_users():
     res = requests.get(jc_api_url, headers=headers).content.decode('utf-8')
     return jsonify(data=res, status=200)
 
-if __name__ == "__main__":
-    app.run(threaded=True, port=8000)
+@app.route('/create_user', methods=['POST'])
+def create_user():
+    inbound_user = {}
+    inbound_user['username'] = request.form['username']
+    inbound_user['email'] = request.form['email']
+    inbound_user['firstname'] = request.form['firstname']
+    inbound_user['lastname'] = request.form['lastname']
+    print(inbound_user)
+    res = requests.post(jc_api_url, headers=headers, data=inbound_user)
+    return jsonify(status=200)
